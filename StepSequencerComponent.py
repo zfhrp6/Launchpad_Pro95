@@ -48,7 +48,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 		self._cache = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 		self._was_velocity_shifted = False
 		
-		if buttons!=None:
+		if buttons is not None:
 			self.set_buttons(buttons)
 	
 
@@ -71,7 +71,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 
 	def set_playhead(self, playhead):
 		self._playhead = playhead
-		if self._buttons != None:
+		if self._buttons is not None:
 			self._update_buttons()
 
 	@property
@@ -103,8 +103,8 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 	# DOWN Button
 	def _update_down_button(self):
 		if self.is_enabled():
-			if self._down_button != None:
-				if self._clip == None:
+			if self._down_button is not None:
+				if self._clip is None:
 					self._down_button.set_on_off_values("DefaultButton.Disabled", "DefaultButton.Disabled")
 					self._down_button.turn_off()
 				else:
@@ -123,18 +123,18 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 	def set_down_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._down_button != button):
-			if (self._down_button != None):
+			if (self._down_button is not None):
 				self._down_button.remove_value_listener(self._down_button_value)
 			self._down_button = button
-			if (self._down_button != None):
+			if (self._down_button is not None):
 				assert isinstance(button, ButtonElement)
 				self._down_button.add_value_listener(self._down_button_value, identify_sender=True)
 			self._update_down_button()
 
 	def _down_button_value(self, value, sender):
-		assert (self._down_button != None)
+		assert (self._down_button is not None)
 		assert (value in range(128))
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			if value != 0 or not sender.is_momentary():
 				if not self._is_mute_shifted and not self._enable_buttons or self._is_mute_shifted and self._enable_buttons:
 					self.scroll_down()
@@ -145,8 +145,8 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 	# UP button
 	def _update_up_button(self):
 		if self.is_enabled():
-			if self._up_button != None:
-				if self._clip == None:
+			if self._up_button is not None:
+				if self._clip is None:
 					self._up_button.set_on_off_values("DefaultButton.Disabled", "DefaultButton.Disabled")
 					self._up_button.turn_off()
 				else:
@@ -165,18 +165,18 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 	def set_up_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if self._up_button != button:
-			if self._up_button != None:
+			if self._up_button is not None:
 				self._up_button.remove_value_listener(self._up_button_value)
 			self._up_button = button
-			if self._up_button != None:
+			if self._up_button is not None:
 				assert isinstance(button, ButtonElement)
 				self._up_button.add_value_listener(self._up_button_value, identify_sender=True)
 			self._update_up_button()
 
 	def _up_button_value(self, value, sender):
-		assert (self._up_button != None)
+		assert (self._up_button is not None)
 		assert (value in range(128))
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			if value != 0 or not sender.is_momentary():
 				if not self._is_mute_shifted and not self._enable_buttons or self._is_mute_shifted and self._enable_buttons:
 					self.scroll_up()
@@ -198,7 +198,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 					self._offset = self._buttons.index(sender)
 				except ValueError:
 					self._offset = -1
-				if self.is_drumrack and self._drum_group_device!=None:
+				if self.is_drumrack and self._drum_group_device is not None:
 					self._drum_group_device.view.selected_drum_pad = self._drum_group_device.drum_pads[self.selected_note]
 				self.update()
 				self._stepsequencer._scale_updated()
@@ -221,15 +221,15 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 			self._update_buttons()
 
 	def _update_buttons(self):
-		if self._enable_buttons and self.is_enabled() and self._buttons!=None:
+		if self._enable_buttons and self.is_enabled() and self._buttons is not None:
 			for i in range(len(self._buttons)):
-				if self._clip == None:
+				if self._clip is None:
 					self._buttons[i].set_on_off_values("DefaultButton.Disabled", "DefaultButton.Disabled")
 					self._buttons[i].turn_off()
 				else:
 					note = self._root_note + i
 					if self.is_drumrack:
-						if self._drum_group_device==None:
+						if self._drum_group_device is None:
 							self._buttons[i].set_on_off_values("DrumGroup.PadSelected","DrumGroup.PadFilled")
 						else:
 							if self._drum_group_device.drum_pads[note].chains:
@@ -241,7 +241,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.Root")
 						elif i % 12 == self._scale[2] or i % 12 == self._scale[4]:
 							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.Highlight")
-						elif self._scale != None and i % 12 in self._scale:
+						elif self._scale is not None and i % 12 in self._scale:
 							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.InScale")
 						else:
 							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.OutOfScale")
@@ -256,7 +256,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 						self._buttons[i].set_enabled(True)
 						self._buttons[i].use_default_message()
 
-						if self._playhead != None and self.note_is_playing(self._clip, self._note_cache, note, self._playhead):
+						if self._playhead is not None and self.note_is_playing(self._clip, self._note_cache, note, self._playhead):
 							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Playing","StepSequencer.NoteSelector.Playing")
 
 					if self.selected_note == note:
@@ -283,7 +283,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 			self._scale[i] = self._scale[i] - self._key
 
 	def note_is_playing(self, clip, note_cache, midi_note, playhead):
-		if clip != None and clip.is_playing and note_cache != None:
+		if clip is not None and clip.is_playing and note_cache is not None:
 			for note in note_cache:
 				note_key = note[0]
 				note_position = note[1]
@@ -397,7 +397,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 					return False
 
 	def note_is_used(self, key):
-		if clip != None:
+		if clip is not None:
 			for note in self._clip_notes:
 				if note[0] == key:  # key: 0-127 MIDI note #
 					return True
@@ -433,7 +433,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 		self._loop_point2 = -1
 
 		self._cache = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-		if buttons!= None:
+		if buttons is not None:
 			self.set_buttons(buttons)
 
 	def set_buttons(self, buttons):
@@ -469,7 +469,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 
 	def set_playhead(self, playhead):
 		self._playhead = playhead
-		if self._buttons != None:
+		if self._buttons is not None:
 			self.update()
 
 	@property
@@ -496,7 +496,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 		ControlSurfaceComponent.set_enabled(self, enabled)
 
 	def _get_clip_loop(self):
-		if self._clip != None:
+		if self._clip is not None:
 			self._loop_start = self._clip.loop_start
 			self._loop_end = self._clip.loop_end
 		else:
@@ -504,7 +504,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 			self._loop_end = 0
 
 	def set_clip_loop(self, start, end):
-		if self._clip != None:
+		if self._clip is not None:
 			self._loop_end = end
 			self._loop_start = start
 			if self._loop_start >= self._clip.loop_end:
@@ -565,7 +565,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 				self._last_button = x
 
 	def can_scroll(self, blocks):
-		if self._clip != None:
+		if self._clip is not None:
 			if (blocks + self._block) < 0:
 				return False
 			if (blocks + self._block) * 8 * self._quantization * self._number_of_lines_per_note < self._clip.loop_start:
@@ -576,7 +576,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 		return False
 
 	def scroll(self, blocks):
-		if self._clip != None and self.can_scroll(blocks):
+		if self._clip is not None and self.can_scroll(blocks):
 			self._block = blocks + self._block
 			self._stepsequencer.set_page(self._block)
 
@@ -585,14 +585,14 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 			self._get_clip_loop()
 			i = 0
 			for button in self._buttons:
-				if self._clip == None:
+				if self._clip is None:
 					button.set_on_off_values("DefaultButton.Disabled","DefaultButton.Disabled")
 					if self._cache[i] != button._off_value:
 						button.turn_off()
 						self._cache[i] = button._off_value
 				else:
 					in_loop = (i * self._blocksize * self._quantization < self._loop_end) and (i * self._blocksize * self._quantization >= self._loop_start)
-					playing = self._playhead != None and self._playhead >= i * self._blocksize * self._quantization and self._playhead < (i + 1) * self._blocksize * self._quantization
+					playing = self._playhead is not None and self._playhead >= i * self._blocksize * self._quantization and self._playhead < (i + 1) * self._blocksize * self._quantization
 					selected = i == self.block
 					if in_loop:
 						if playing:
@@ -751,17 +751,17 @@ class StepSequencerComponent(CompoundComponent):
 	
 	def set_matrix(self,matrix):
 		self._matrix = matrix
-		if self._matrix!=None:
+		if self._matrix is not None:
 			for x in range(self._matrix.width()):
 				for y in range(self._matrix.height()):
 					self._matrix.get_button(x, y).set_enabled(True)
 		self._delegate_matrix()
 		if self._mode==-1:
 			self.set_mode(STEPSEQ_MODE_NORMAL)
-		self.set_enabled(self._matrix!=None)
+		self.set_enabled(self._matrix is not None)
 		
 	def _delegate_matrix(self):
-		if self._matrix !=None:
+		if self._matrix is not None:
 			if self._mode == STEPSEQ_MODE_SCALE_EDIT:
 				self._scale_component.set_matrix(self._matrix)
 				self._loop_selector.set_buttons(None)
@@ -875,13 +875,13 @@ class StepSequencerComponent(CompoundComponent):
 		self._scale_selector.set_osd(osd)
 
 	def _update_OSD(self):
-		if self._osd != None:
+		if self._osd is not None:
 			if self._mode == STEPSEQ_MODE_MULTINOTE:
 				self._osd.set_mode('Drum Step Sequencer (multinote)')
 			else:
 				self._osd.set_mode('Drum Step Sequencer')
 
-			if self._clip != None:
+			if self._clip is not None:
 				self._osd.attributes[0] = MUSICAL_MODES[self._scale_selector._modus * 2]
 				self._osd.attribute_names[0] = "Scale"
 				self._osd.attributes[1] = KEY_NAMES[self._scale_selector._key % 12]
@@ -916,14 +916,14 @@ class StepSequencerComponent(CompoundComponent):
 				self._osd.attributes[7] = " "
 				self._osd.attribute_names[7] = " "
 
-			if self._selected_track != None:
+			if self._selected_track is not None:
 				if self._lock_to_track and self._is_locked:
 					self._osd.info[0] = "track : " + self._selected_track.name + " (locked)"
 				else:
 					self._osd.info[0] = "track : " + self._selected_track.name
 			else:
 				self._osd.info[0] = " "
-			if self._clip != None:
+			if self._clip is not None:
 				name = self._clip.name
 				if name == "":
 					name = "(unamed clip)"
@@ -957,7 +957,7 @@ class StepSequencerComponent(CompoundComponent):
 			#	self._note_selector.set_selected_note(self.index_of(self._drum_group_device.drum_pads,self._drum_group_device.view.selected_drum_pad))
 
 			#load scale settings from clip
-			if STEPSEQ__SAVE_SCALE != None and STEPSEQ__SAVE_SCALE == "clip":  
+			if STEPSEQ__SAVE_SCALE is not None and STEPSEQ__SAVE_SCALE == "clip":  
 				self._scale_component.from_object(self._clip)
 				self._note_selector.set_scale(self._scale_component.notes, self._scale_component._selected_key)
 				self._note_selector.set_selected_note(self._scale_component._octave_index * 12 + self._scale_component._selected_key)
@@ -967,7 +967,7 @@ class StepSequencerComponent(CompoundComponent):
 			self.on_clip_slot_changed()
 			# call super.set_enabled()
 			CompoundComponent.set_enabled(self, enabled)
-			if self._clip != None and self._is_locked:
+			if self._clip is not None and self._is_locked:
 				self._control_surface.show_message("stepseq : clip '"+str(self._clip.name)+"'")
 			self._on_notes_changed()
 			self._update_OSD()
@@ -1057,7 +1057,7 @@ class StepSequencerComponent(CompoundComponent):
 			self._update_note_editor()
 			self._update_OSD()
 			# show clip !
-			if not self._is_locked and self._clip != None:
+			if not self._is_locked and self._clip is not None:
 				if ((not self.application().view.is_view_visible('Detail')) or (not self.application().view.is_view_visible('Detail/Clip'))):
 					self.application().view.show_view('Detail')
 					self.application().view.show_view('Detail/Clip')
@@ -1081,7 +1081,7 @@ class StepSequencerComponent(CompoundComponent):
 
 	def _update_note_editor(self):
 		self._note_editor.set_multinote(self._mode == STEPSEQ_MODE_MULTINOTE, self._number_of_lines_per_note)
-		if self._matrix != None:
+		if self._matrix is not None:
 			if self._mode == STEPSEQ_MODE_NORMAL:
 				self._note_editor.set_height(4)#self._matrix._height - 4)
 			else:
@@ -1112,13 +1112,13 @@ class StepSequencerComponent(CompoundComponent):
 		self.update()
 
 	def on_selected_track_changed(self):
-		if not self._is_locked or self._clip == None:
+		if not self._is_locked or self._clip is None:
 			#self._detect_scale_mode()
 			self.on_clip_slot_changed()
 			self.update()
 
 	def _on_loop_changed(self):
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			self._loop_selector._get_clip_loop()
 
 	def on_clip_slot_has_clip_changed(self):
@@ -1134,11 +1134,11 @@ class StepSequencerComponent(CompoundComponent):
 		clip_slot = self._clip_slot
 
 		# update track if not track locked
-		if not self._is_locked or self._selected_track == None:
+		if not self._is_locked or self._selected_track is None:
 			self._selected_track = self.song().view.selected_track
 
 		# update scene
-		if self._selected_track != None:
+		if self._selected_track is not None:
 			idx = -1
 			if self._lock_to_track and self._is_locked:
 				# track locked mode
@@ -1174,21 +1174,21 @@ class StepSequencerComponent(CompoundComponent):
 				clip_slot = self._selected_track.clip_slots[idx]
 
 		# update clip slot
-		if clip_slot != self._clip_slot or self._clip_slot == None:
+		if clip_slot != self._clip_slot or self._clip_slot is None:
 			# self._control_surface.log_message("update clip_slot")
-			if clip_slot != None and clip_slot.has_clip_has_listener(self.on_clip_slot_has_clip_changed):
+			if clip_slot is not None and clip_slot.has_clip_has_listener(self.on_clip_slot_has_clip_changed):
 				clip_slot.remove_has_clip_listener(self.on_clip_slot_has_clip_changed)
 			self._clip_slot = clip_slot
-			if self._clip_slot != None:
+			if self._clip_slot is not None:
 				if self._clip_slot.has_clip_has_listener(self.on_clip_slot_has_clip_changed):
 					self._clip_slot.remove_has_clip_listener(self.on_clip_slot_has_clip_changed)
 				self._clip_slot.add_has_clip_listener(self.on_clip_slot_has_clip_changed)
 
-		if self._clip_slot != None and self._clip_slot.has_clip and self._clip_slot.clip != None and self._clip_slot.clip.is_midi_clip:
-			if self._clip == None or self._clip != self._clip_slot.clip:
+		if self._clip_slot is not None and self._clip_slot.has_clip and self._clip_slot.clip is not None and self._clip_slot.clip.is_midi_clip:
+			if self._clip is None or self._clip != self._clip_slot.clip:
 				# self._control_surface.log_message("link clip_slot")
 				# unlink
-				if self._clip != None and self._clip.is_midi_clip:
+				if self._clip is not None and self._clip.is_midi_clip:
 					if self._clip.notes_has_listener(self._on_notes_changed):
 						self._clip.remove_notes_listener(self._on_notes_changed)
 					if self._clip.playing_status_has_listener(self._on_playing_status_changed):
@@ -1201,7 +1201,7 @@ class StepSequencerComponent(CompoundComponent):
 						self._clip.remove_loop_end_listener(self._on_loop_changed)
 				
 				#load scale settings from clip
-				if STEPSEQ__SAVE_SCALE != None and STEPSEQ__SAVE_SCALE == "clip":  
+				if STEPSEQ__SAVE_SCALE is not None and STEPSEQ__SAVE_SCALE == "clip":  
 					self._scale_component.from_object(self._clip_slot.clip)
 					#must set clip to None otherwise it trigger a clip note update which we dont want.
 					self._clip = None
@@ -1233,7 +1233,7 @@ class StepSequencerComponent(CompoundComponent):
 		else:
 			# self._control_surface.log_message("empty clip_slot or no clip_slot. cleanup")
 			# unlink
-			if self._clip != None:
+			if self._clip is not None:
 				if self._clip.notes_has_listener(self._on_notes_changed):
 					self._clip.remove_notes_listener(self._on_notes_changed)
 				if self._clip.playing_status_has_listener(self._on_playing_status_changed):
@@ -1262,7 +1262,7 @@ class StepSequencerComponent(CompoundComponent):
 	def _on_notes_changed(self):  # trigger by callback on clip or via _clip_changed.
 		if self.is_enabled():
 			# get notes
-			if self._clip == None:
+			if self._clip is None:
 				note_cache = []
 			else:
 				self._clip.select_all_notes()
@@ -1284,7 +1284,7 @@ class StepSequencerComponent(CompoundComponent):
 
 	def _on_playing_position_changed(self):  # playing position changed listener
 		if self.is_enabled():
-			if self._clip != None and self._clip.is_playing and self.song().is_playing:
+			if self._clip is not None and self._clip.is_playing and self.song().is_playing:
 				self._playhead = self._clip.playing_position
 			else:
 				self._playhead = None
@@ -1294,12 +1294,12 @@ class StepSequencerComponent(CompoundComponent):
 
 # DRUM_GROUP_DEVICE
 	# def _update_drum_group_device(self):
-	# 	if self.song().view.selected_track != None:
+	# 	if self.song().view.selected_track is not None:
 	# 		track = self.song().view.selected_track
-	# 		if(track.devices != None and len(track.devices) > 0):
+	# 		if(track.devices is not None and len(track.devices) > 0):
 	# 			#device = track.devices[0]
 	# 			device = self.find_drum_group_device(track)
-	# 			if(device!= None and device.can_have_drum_pads and device.has_drum_pads):
+	# 			if(device is not None and device.can_have_drum_pads and device.has_drum_pads):
 	# 				self._drum_group_device = device
 	# 			else:
 	# 				self._drum_group_device = None
@@ -1312,7 +1312,7 @@ class StepSequencerComponent(CompoundComponent):
 	#def _detect_scale_mode(self):
 	#	if not self._is_locked:
 	#		self._update_drum_group_device()
-	#		self._scale_component.set_drumrack(self._drum_group_device != None)
+	#		self._scale_component.set_drumrack(self._drum_group_device is not None)
 	
 	# def find_drum_group_device(self, track):
 	# 	device = find_if(lambda d: d.type == Live.Device.DeviceType.instrument, track.devices)
@@ -1327,8 +1327,8 @@ class StepSequencerComponent(CompoundComponent):
 # SCALE Selector Button
 	def _update_scale_button(self):
 		if self.is_enabled():
-			if (self._scale_button != None):
-				if self._clip != None:
+			if (self._scale_button is not None):
+				if self._clip is not None:
 					self._scale_button.set_on_off_values("StepSequencer.Scale.On", "StepSequencer.Scale.Off")
 				else:
 					self._scale_button.set_on_off_values("DefaultButton.Disabled", "DefaultButton.Disabled")
@@ -1340,10 +1340,10 @@ class StepSequencerComponent(CompoundComponent):
 	def set_scale_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._scale_button != button):
-			if (self._scale_button != None):
+			if (self._scale_button is not None):
 				self._scale_button.remove_value_listener(self._scale_button_value)
 			self._scale_button = button
-			if (self._scale_button != None):
+			if (self._scale_button is not None):
 				assert isinstance(button, ButtonElement)
 				self._scale_button.add_value_listener(self._scale_button_value)
 	
@@ -1351,18 +1351,18 @@ class StepSequencerComponent(CompoundComponent):
 	def _scale_button_value(self, value):
 		if (value != 0):
 			self._mode_backup = self._mode
-			if self._scale_component != None and self._note_selector != None:
+			if self._scale_component is not None and self._note_selector is not None:
 				self._scale_component.set_octave(int(self._note_selector._root_note / 12))
 				self._scale_component.set_key(self._note_selector._key)
 				self.set_mode(STEPSEQ_MODE_SCALE_EDIT)
 		else:
-			if self._scale_component != None and self._note_selector != None:
+			if self._scale_component is not None and self._note_selector is not None:
 				self._note_editor._force_update = True
 				self._note_selector.set_scale(self._scale_component.notes, self._scale_component._key)
 				self._note_selector.set_selected_note(self._scale_component._octave * 12 + self._scale_component._key)
 				self._scale_updated()
 				#update clip name
-				if STEPSEQ__SAVE_SCALE != None and STEPSEQ__SAVE_SCALE == "clip":  
+				if STEPSEQ__SAVE_SCALE is not None and STEPSEQ__SAVE_SCALE == "clip":  
 					self._scale_component.update_object_name(self._clip)
 			self.set_mode(self._mode_backup, self._number_of_lines_per_note)
 
@@ -1371,10 +1371,10 @@ class StepSequencerComponent(CompoundComponent):
 	def set_mute_shift_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._mute_shift_button != button):
-			if (self._mute_shift_button != None):
+			if (self._mute_shift_button is not None):
 				self._mute_shift_button.remove_value_listener(self._mute_shift_button_value)
 			self._mute_shift_button = button
-			if (self._mute_shift_button != None):
+			if (self._mute_shift_button is not None):
 				assert isinstance(button, ButtonElement)
 				self._last_mute_shift_button_press = time.time()
 				self._is_mute_shifted = False
@@ -1382,8 +1382,8 @@ class StepSequencerComponent(CompoundComponent):
 
 
 	def _update_mute_shift_button(self):
-		if self.is_enabled() and self._mute_shift_button != None:
-			if self._clip != None and self._clip.is_midi_clip:
+		if self.is_enabled() and self._mute_shift_button is not None:
+			if self._clip is not None and self._clip.is_midi_clip:
 				self._mute_shift_button.set_on_off_values("StepSequencer.Mute.On", "StepSequencer.Mute.Off")
 				if self._is_mute_shifted:
 					self._mute_shift_button.turn_on()
@@ -1394,9 +1394,9 @@ class StepSequencerComponent(CompoundComponent):
 				self._mute_shift_button.turn_off()
 
 	def _mute_shift_button_value(self, value, sender):
-		assert (self._mute_shift_button != None)
+		assert (self._mute_shift_button is not None)
 		assert (value in range(128))
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			now = time.time()
 			if ((value != 0) or (not sender.is_momentary())):
 				self._is_mute_shifted = True
@@ -1413,16 +1413,16 @@ class StepSequencerComponent(CompoundComponent):
 # MODE
 	def _update_mode_button(self):
 		if self.is_enabled():
-			if (self._mode_button != None):
-				if self._clip != None:
+			if (self._mode_button is not None):
+				if self._clip is not None:
 					self._mode_button.set_on_off_values("StepSequencer.Mode.On", "StepSequencer.Mode.On")
 					if self._mode == STEPSEQ_MODE_MULTINOTE:
 						self._mode_button.turn_on()
-						if self._osd != None:
+						if self._osd is not None:
 							self._osd.update()
 					else:
 						self._mode_button.turn_off()
-						if self._osd != None:
+						if self._osd is not None:
 							self._osd.update()
 				else:
 					self._mode_button.set_on_off_values("DefaultButton.Disabled", "DefaultButton.Disabled")
@@ -1431,18 +1431,18 @@ class StepSequencerComponent(CompoundComponent):
 	def set_mode_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._mode_button != button):
-			if (self._mode_button != None):
+			if (self._mode_button is not None):
 				self._mode_button.remove_value_listener(self._mode_button_value)
 			self._mode_button = button
-			if (self._mode_button != None):
+			if (self._mode_button is not None):
 				assert isinstance(button, ButtonElement)
 				self._last_mode_button_press = time.time()
 				self._mode_button.add_value_listener(self._mode_button_value, identify_sender=True)
 	 
 	def _mode_button_value(self, value, sender):
-		assert (self._mode_button != None)
+		assert (self._mode_button is not None)
 		assert (value in range(128))
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			if ((value != 0) or (not sender.is_momentary())):
 				self._last_mode_button_press = time.time()
 			else:
@@ -1462,9 +1462,9 @@ class StepSequencerComponent(CompoundComponent):
 # QUANTIZE
 	def _update_quantization_button(self):
 		if self.is_enabled():
-			if (self._quantization_button != None):
+			if (self._quantization_button is not None):
 				self._quantization_button.set_on_off_values(self.QUANTIZATION_COLOR_MAP[self._quantization_index], "DefaultButton.Disabled")
-				if self._clip != None:
+				if self._clip is not None:
 					self._quantization_button.turn_on()
 				else:
 					self._quantization_button.turn_off()
@@ -1472,10 +1472,10 @@ class StepSequencerComponent(CompoundComponent):
 	def set_quantization_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._quantization_button != button):
-			if (self._quantization_button != None):
+			if (self._quantization_button is not None):
 				self._quantization_button.remove_value_listener(self._quantization_button_value)
 			self._quantization_button = button
-			if (self._quantization_button != None):
+			if (self._quantization_button is not None):
 				assert isinstance(button, ButtonElement)
 				self._quantization_index = 2
 				self.set_quantization(QUANTIZATION_MAP[self._quantization_index])
@@ -1484,7 +1484,7 @@ class StepSequencerComponent(CompoundComponent):
 
 	#@quantization_button.pressed
 	def _quantization_button_value(self, value):
-		if self.is_enabled() and self._clip != None and value!=0:
+		if self.is_enabled() and self._clip is not None and value!=0:
 			if(self._mode == STEPSEQ_MODE_SCALE_EDIT):
 				self._quantization_index = (self._quantization_index - 1+len(QUANTIZATION_MAP)) % len(QUANTIZATION_MAP)
 			else:
@@ -1495,13 +1495,13 @@ class StepSequencerComponent(CompoundComponent):
 
 	def set_quantization(self, quantization):
 		self._quantization = quantization
-		if self._note_editor != None:
+		if self._note_editor is not None:
 			self._note_editor.set_quantization(self._quantization)
-		if self._loop_selector != None:
+		if self._loop_selector is not None:
 			self._loop_selector.update()
-		if self._note_selector != None:
+		if self._note_selector is not None:
 			self._note_selector.update()
-		if self._note_editor != None:
+		if self._note_editor is not None:
 			self._update_note_editor()
 		self._update_OSD()
 		
@@ -1510,10 +1510,10 @@ class StepSequencerComponent(CompoundComponent):
 	def set_lock_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._lock_button != button):
-			if (self._lock_button != None):
+			if (self._lock_button is not None):
 				self._lock_button.remove_value_listener(self._lock_button_value)
 			self._lock_button = button
-			if (self._lock_button != None):
+			if (self._lock_button is not None):
 				assert isinstance(button, ButtonElement)
 				self._last_lock_button_press = time.time()
 				self._lock_button.add_value_listener(self._lock_button_value, identify_sender=True)
@@ -1521,8 +1521,8 @@ class StepSequencerComponent(CompoundComponent):
 	
 	def _update_lock_button(self):
 		if self.is_enabled():
-			if self._lock_button != None:
-				if self._clip != None:
+			if self._lock_button is not None:
+				if self._clip is not None:
 					if self._lock_to_track:
 						self._lock_button.set_on_off_values("StepSequencer.Lock.ToTrack.On", "StepSequencer.Lock.ToTrack.Off")
 					else:
@@ -1536,9 +1536,9 @@ class StepSequencerComponent(CompoundComponent):
 					self._lock_button.turn_off()
 
 	def _lock_button_value(self, value, sender):
-		assert (self._lock_button != None)
+		assert (self._lock_button is not None)
 		assert (value in range(128))
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			now = time.time() 
 			if ((value != 0) or (not self._lock_button.is_momentary())):
 				self._last_lock_button_press = now
@@ -1559,8 +1559,8 @@ class StepSequencerComponent(CompoundComponent):
 # RIGHT Button
 	def _update_right_button(self):
 		if self.is_enabled():
-			if self._right_button != None:
-				if self._clip != None:
+			if self._right_button is not None:
+				if self._clip is not None:
 					self._right_button.set_on_off_values("StepSequencer.Nav.On", "StepSequencer.Nav.Off")
 					if self._loop_selector.can_scroll(1):
 						self._right_button.turn_on()
@@ -1571,7 +1571,7 @@ class StepSequencerComponent(CompoundComponent):
 					self._right_button.turn_off()
 
 	def _arrow_right_pressed(self, value, sender):
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			self._loop_selector.scroll(1)
 			self._note_editor.request_display_page()
 			self.update()
@@ -1579,8 +1579,8 @@ class StepSequencerComponent(CompoundComponent):
 # LEFT Button
 	def _update_left_button(self):
 		if self.is_enabled():
-			if self._left_button != None:
-				if self._clip != None:
+			if self._left_button is not None:
+				if self._clip is not None:
 					self._left_button.set_on_off_values("StepSequencer.Nav.On", "StepSequencer.Nav.Off")
 					if self._loop_selector.can_scroll(-1):
 						self._left_button.turn_on()
@@ -1593,7 +1593,7 @@ class StepSequencerComponent(CompoundComponent):
 	
 	#@arrow_left_button.pressed
 	def _arrow_left_pressed(self, button):
-		if self._clip != None:
+		if self._clip is not None:
 			self._loop_selector.scroll(-1)
 			self._note_editor.request_display_page()
 			self.update()
@@ -1602,7 +1602,7 @@ class StepSequencerComponent(CompoundComponent):
 # UTILS
 
 	def create_clip(self):
-		if self.song().view.highlighted_clip_slot != None:
+		if self.song().view.highlighted_clip_slot is not None:
 			clip_slot = self.song().view.highlighted_clip_slot
 			if not clip_slot.has_clip:
 				if self._mode == STEPSEQ_MODE_NORMAL:
@@ -1621,7 +1621,7 @@ class StepSequencerComponent(CompoundComponent):
 					track = self._clip_slot.canonical_parent
 					newIdx = track.duplicate_clip_slot(list(track.clip_slots).index(self._clip_slot))
 					self.song().view.selected_scene = self.song().scenes[newIdx]
-					if track.clip_slots[newIdx] != None:
+					if track.clip_slots[newIdx] is not None:
 						track.clip_slots[newIdx].fire()
 					self.on_clip_slot_changed()
 					self.update()

@@ -37,49 +37,49 @@ class DeviceControllerStrip(ButtonSliderElement):
 	
 	@property
 	def _value(self):
-		if self._parameter_to_map_to != None:	
+		if self._parameter_to_map_to is not None:	
 			return self._parameter_to_map_to.value
 		else:
 			return 0
 			
 	@property
 	def _max(self):
-		if self._parameter_to_map_to != None:	
+		if self._parameter_to_map_to is not None:	
 			return self._parameter_to_map_to.max
 		else:
 			return 0
 	
 	@property
 	def _min(self):
-		if self._parameter_to_map_to != None:	
+		if self._parameter_to_map_to is not None:	
 			return self._parameter_to_map_to.min
 		else:
 			return 0
 
 	@property
 	def _range(self):
-		if self._parameter_to_map_to != None:	
+		if self._parameter_to_map_to is not None:	
 			return self._parameter_to_map_to.max - self._parameter_to_map_to.min
 		else:
 			return 0
 
 	@property
 	def _default_value(self):
-		if self._parameter_to_map_to != None:	
+		if self._parameter_to_map_to is not None:	
 			return self._parameter_to_map_to._default_value
 		else:
 			return 0
 				
 	@property
 	def _is_quantized(self):
-		if self._parameter_to_map_to != None:	
+		if self._parameter_to_map_to is not None:	
 			return self._parameter_to_map_to.is_quantized
 		else:
 			return false
 					
 	@property
 	def _mode(self):
-		if self._parameter_to_map_to != None:	
+		if self._parameter_to_map_to is not None:	
 			if self._is_quantized:
 				if self._range == 1:
 					return SLIDER_MODE_TOGGLE
@@ -116,7 +116,7 @@ class DeviceControllerStrip(ButtonSliderElement):
 		self._update_off()
 		
 	def reset_if_no_parameter(self):
-		if self._parameter_to_map_to == None:
+		if self._parameter_to_map_to is None:
 			self.reset()
 			
 	def _update_off(self):
@@ -188,7 +188,7 @@ class DeviceControllerStrip(ButtonSliderElement):
 		assert isinstance(value, int)
 		assert (sender in self._buttons)
 		self._last_sent_value = -1
-		if (self._parameter_to_map_to != None and self._enabled and ((value != 0) or (not sender.is_momentary()))):
+		if (self._parameter_to_map_to is not None and self._enabled and ((value != 0) or (not sender.is_momentary()))):
 			if (value != self._last_sent_value):
 				index_of_sender = list(self._buttons).index(sender)
 				if (self._mode == SLIDER_MODE_TOGGLE) and index_of_sender==0:
@@ -242,7 +242,7 @@ class DeviceControllerStrip(ButtonSliderElement):
 				self._parent._update_OSD()
 
 	def _on_parameter_changed(self):
-		assert (self._parameter_to_map_to != None)
+		assert (self._parameter_to_map_to is not None)
 		if self._parent is not None:
 			self._parent._update_OSD()
 		self.update()

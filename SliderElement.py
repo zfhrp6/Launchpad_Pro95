@@ -37,7 +37,7 @@ class SliderElement(SliderElementBase):
 	def _setup_fader(self):
 		if self._header:
 			param = self._parameter_to_map_to
-			if param != None and param.is_enabled:
+			if param is not None and param.is_enabled:
 				p_range = param.max - param.min
 				value = int(round((param.value - param.min) / p_range * 127))
 				color_value = self._color

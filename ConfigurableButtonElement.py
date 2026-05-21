@@ -52,7 +52,7 @@ class ConfigurableButtonElement(ButtonElement):
 		self.set_enabled(True)
 
 	def set_on_off_values(self, on_value, off_value = None):
-		if off_value == None:
+		if off_value is None:
 			self.states[True] = str(on_value)+".On"
 			self.states[False] = str(on_value)+".Off"
 		else:

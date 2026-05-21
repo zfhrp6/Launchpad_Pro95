@@ -27,7 +27,7 @@ class NoteComponent(ControlSurfaceComponent):
 		for index, button in enumerate(self.matrix):
 			row, col = button.coordinate
 			note_info = pattern.note(col, max_j - row)
-			if note_info.index != None and note_info.index<128:
+			if note_info.index is not None and note_info.index<128:
 				if note_info.root:
 					button.color = "Note.Pads.Root"
 				elif note_info.highlight:

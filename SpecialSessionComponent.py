@@ -120,7 +120,7 @@ class SpecialSceneComponent(SceneComponent):
 
 	@subject_slot('value')
 	def _launch_value(self, value):
-		if self.is_enabled() and self._scene != None:
+		if self.is_enabled() and self._scene is not None:
 			if self._select_button and self._select_button.is_pressed() and value:
 				self._do_select_scene(self._scene)
 			elif self._delete_button and self._delete_button.is_pressed() and value:

@@ -118,10 +118,10 @@ class ScaleComponent(ControlSurfaceComponent):
 		if matrix:
 			matrix.reset()
 		if (matrix != self._matrix):
-			if (self._matrix != None):
+			if (self._matrix is not None):
 				self._matrix.remove_value_listener(self._matrix_pressed)
 		self._matrix = matrix
-		if (self._matrix != None):
+		if (self._matrix is not None):
 			self._matrix.add_value_listener(self._matrix_pressed)
 		self.update()
 
@@ -131,7 +131,7 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._osd = osd
 
 	def _update_OSD(self):
-		if self._osd != None:
+		if self._osd is not None:
 			self._osd.attributes[0] = ""
 			self._osd.attribute_names[0] = ""
 			self._osd.attributes[1] = MUSICAL_MODES[self._modus * 2]
@@ -151,7 +151,7 @@ class ScaleComponent(ControlSurfaceComponent):
 			self._osd.update()
 			
 	def update(self):
-		if self.is_enabled() and self._matrix!=None:
+		if self.is_enabled() and self._matrix is not None:
 			#self._control_surface.log_message("update scale: "+str(self._matrix))
 			super(ScaleComponent, self).update()
 			self._update_OSD()
@@ -473,7 +473,7 @@ class ScaleComponent(ControlSurfaceComponent):
 			origin = -notes[0]
 
 		# interval
-		if self._interval == None:
+		if self._interval is None:
 			interval = 8
 		elif self.is_chromatic:
 			interval = [0, 2, 4, 5, 7, 9, 10, 11][self._interval]

@@ -63,7 +63,7 @@ class ClipActionsComponent(ControlSurfaceComponent, Subject):
 		self._locked_clip = clip
 		
 	def get_clip(self):
-		if self._locked_clip == None:
+		if self._locked_clip is None:
 			return self._selected_clip
 		else:
 			return self._locked_clip
@@ -119,7 +119,7 @@ class ClipActionsComponent(ControlSurfaceComponent, Subject):
 
 	@subject_slot('playing_slot_index')
 	def _on_selection_changed(self):
-		if self._locked_clip == None:
+		if self._locked_clip is None:
 			self._selected_clip = None
 			if self._track in self.song().tracks:
 				slot_index = self._track.playing_slot_index

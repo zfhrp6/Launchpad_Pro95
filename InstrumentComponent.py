@@ -274,14 +274,14 @@ class CommonModeComponent(ControlSurfaceComponent):
 	
 	@play_button.pressed
 	def _play(self,button):
-		if self.selected_scene != None:
+		if self.selected_scene is not None:
 			slot = self.selected_scene.clip_slots[self.selected_track_idx]
 			slot.fire()
 			self._control_surface.show_message("fire clip")
 	
 	@stop_button.pressed
 	def _stop(self,button):
-		if self.selected_scene != None:
+		if self.selected_scene is not None:
 			slot = self.selected_scene.clip_slots[self.selected_track_idx]
 			slot.stop()
 			self._control_surface.show_message("stop clip")
