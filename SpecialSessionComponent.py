@@ -13,11 +13,6 @@ from .ClipActionsComponent import double_clip, duplicate_clip
 
 from pushbase import special_session_component
 
-try:
-    xrange
-except NameError:
-    xrange = range
-
 def copyclip(source_slot, destination_slot):
 
     function = special_session_component.ClipSlotCopyHandler()
@@ -188,7 +183,7 @@ class SpecialSessionComponent(SessionComponent):
 	@subject_slot_group('value')
 	def _on_stop_scene_value(self, value, button):
 		if self.is_enabled():
-			if value is not 0 or not button.is_momentary():
+			if value != 0 or not button.is_momentary():
 				scene_index = list(self._stop_scene_clip_buttons).index(button) + self.scene_offset()
 				for track in self.tracks_to_use():
 					if in_range(scene_index, 0, len(track.clip_slots)) and (track.playing_slot_index == scene_index or track.fired_slot_index == scene_index):
@@ -223,7 +218,7 @@ class SpecialSessionComponent(SessionComponent):
 
 	def _update_stop_scene_clip_buttons(self):
 		if self.is_enabled():
-			for index in xrange(self._num_scenes):
+			for index in range(self._num_scenes):
 				self._update_stop_scene_leds(index)
 
 	def _update_stop_scene_leds(self, index):

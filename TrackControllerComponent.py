@@ -182,7 +182,7 @@ class TrackControllerComponent(MixerComponent):
 		assert (self._next_track_button != None)
 		assert (value in range(128))
 		if self.is_enabled():
-			if (not sender.is_momentary()) or (value is not 0):
+			if (not sender.is_momentary()) or (value != 0):
 				if self.selected_track_idx < len(self.song().tracks) - 1:
 					self.song().view.selected_track = self.song().tracks[self.selected_track_idx + 1]
 					self._do_implicit_arm()
@@ -200,7 +200,7 @@ class TrackControllerComponent(MixerComponent):
 	def _prev_track_value(self, value, sender):
 		assert (self._prev_track_button != None)
 		assert (value in range(128))
-		if (not sender.is_momentary()) or (value is not 0):
+		if (not sender.is_momentary()) or (value != 0):
 			if self.is_enabled():
 				if self.selected_track_idx > 0:
 					self.song().view.selected_track = self.song().tracks[self.selected_track_idx - 1]
@@ -226,7 +226,7 @@ class TrackControllerComponent(MixerComponent):
 	def _prev_scene_value(self, value, sender):
 		assert (self._prev_scene_button != None)
 		assert (value in range(128))
-		if not sender.is_momentary() or value is not 0:
+		if not sender.is_momentary() or value != 0:
 			if self.is_enabled():
 				if self.selected_scene_idx > 0:
 					self.song().view.selected_scene = self.song().scenes[self.selected_scene_idx - 1]
@@ -234,9 +234,9 @@ class TrackControllerComponent(MixerComponent):
 	def _next_scene_value(self, value, sender):
 		assert (self._next_scene_button != None)
 		assert (value in range(128))
-		if not sender.is_momentary() or value is not 0:
+		if not sender.is_momentary() or value != 0:
 			if self.is_enabled():
-				if not sender.is_momentary() or value is not 0:
+				if not sender.is_momentary() or value != 0:
 					if self.selected_scene_idx < len(self.song().scenes) - 1:
 						self.song().view.selected_scene = self.song().scenes[self.selected_scene_idx + 1]
 
@@ -488,4 +488,3 @@ class TrackControllerComponent(MixerComponent):
 			return clip_slot.clip
 		else:
 			return None
-

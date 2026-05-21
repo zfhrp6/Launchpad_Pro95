@@ -355,7 +355,7 @@ class DeviceComponent(LiveDeviceComponent):
 					self._precision_button.turn_off()
 
 	def _precision_value(self, value, sender):
-		if ((not sender.is_momentary()) or (value is not 0)):
+		if ((not sender.is_momentary()) or (value != 0)):
 			if (self._precision_button != None and self.is_enabled()):
 				self._precision_mode = not self._precision_mode
 				self.update_precision_button()
@@ -438,7 +438,7 @@ class DeviceComponent(LiveDeviceComponent):
 		assert (self._next_track_button != None)
 		assert (value in range(128))
 		if self.is_enabled():
-			if ((not sender.is_momentary()) or (value is not 0)):
+			if ((not sender.is_momentary()) or (value != 0)):
 				if(self.selected_track_idx < len(self.song().tracks) - 1 and not self._locked_to_device2):
 					self.song().view.selected_track = self.song().tracks[self.selected_track_idx + 1]
 
@@ -456,7 +456,7 @@ class DeviceComponent(LiveDeviceComponent):
 	def _prev_track_value(self, value, sender):
 		assert (self._prev_track_button != None)
 		assert (value in range(128))
-		if ((not sender.is_momentary()) or (value is not 0)):
+		if ((not sender.is_momentary()) or (value != 0)):
 			if self.is_enabled():
 				if(self.selected_track_idx > 0 and not self._locked_to_device2):
 					self.song().view.selected_track = self.song().tracks[self.selected_track_idx - 1]
@@ -497,7 +497,7 @@ class DeviceComponent(LiveDeviceComponent):
 		assert (self._next_device_button != None)
 		assert (value in range(128))
 		if self.is_enabled():
-			if ((not sender.is_momentary()) or (value is not 0)):
+			if ((not sender.is_momentary()) or (value != 0)):
 				if self.selected_track() != None and len(self.selected_track().devices) > 0:
 					if(self.selected_device_idx < len(self.selected_track().devices) - 1 and not self._locked_to_device2):
 						self.song().view.select_device(self.selected_track().devices[self.selected_device_idx + 1])
@@ -516,7 +516,7 @@ class DeviceComponent(LiveDeviceComponent):
 		assert (self._prev_device_button != None)
 		assert (value in range(128))
 		if self.is_enabled():
-			if ((not sender.is_momentary()) or (value is not 0)):
+			if ((not sender.is_momentary()) or (value != 0)):
 				if self.selected_track() != None and len(self.selected_track().devices) > 0:
 					if(self.selected_device_idx > 0 and not self._locked_to_device2):
 						self.song().view.select_device(self.selected_track().devices[self.selected_device_idx - 1])

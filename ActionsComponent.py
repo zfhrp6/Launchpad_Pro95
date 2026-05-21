@@ -1,4 +1,3 @@
-from __future__ import with_statement
 import Live
 from _Framework.Util import BooleanContext
 from _Framework.SubjectSlot import subject_slot

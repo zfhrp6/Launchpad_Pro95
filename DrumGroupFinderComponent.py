@@ -1,16 +1,8 @@
-from __future__ import with_statement
 from itertools import chain
 import Live
 from _Framework.Util import find_if
 from _Framework.SubjectSlot import Subject, subject_slot_group, subject_slot
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
-try:
-    from itertools import imap
-except ImportError:
-    # Python 3...
-    imap=map
-
-
 class DrumGroupFinderComponent(ControlSurfaceComponent, Subject):
 	"""
 	Looks in the hierarchy of devices of a track, looking
@@ -80,7 +72,7 @@ def find_instrument_devices(track_or_chain):
 	instrument = find_if(lambda d: d.type == Live.Device.DeviceType.instrument, track_or_chain.devices)
 	if instrument and not instrument.can_have_drum_pads:
 		if instrument.can_have_chains:
-			return chain([instrument], *imap(find_instrument_devices, instrument.chains))
+			return chain([instrument], *map(find_instrument_devices, instrument.chains))
 	return []
 
 
@@ -93,4 +85,4 @@ def find_drum_group_device(track_or_chain):
 		if instrument.can_have_drum_pads:
 			return instrument
 		elif instrument.can_have_chains:
-			return find_if(bool, imap(find_drum_group_device, instrument.chains))
+			return find_if(bool, map(find_drum_group_device, instrument.chains))

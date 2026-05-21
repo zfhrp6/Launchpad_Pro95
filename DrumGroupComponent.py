@@ -1,8 +1,3 @@
-try:
-    from itertools import imap
-except ImportError:
-    # Python 3...
-    imap=map
 from _Framework.Util import find_if, first, clamp
 from _Framework.Dependency import depends
 from _Framework.SubjectSlot import subject_slot_group, subject_slot
@@ -103,12 +98,12 @@ class DrumGroupComponent(ResettableSlideComponent, Slideable):
 		pos_count = self.position_count
 		first_pos = max(int(pmin - 0.05), 0)
 		last_pos = min(int(pmax + 0.2), pos_count)
-		return xrange(first_pos, last_pos)
+		return range(first_pos, last_pos)
 
 	def contents(self, index):
 		drum = self._drum_group_device
 		if drum:
-			return any(imap(lambda pad: pad.chains, drum.drum_pads[index * 4:index * 4 + 4]))
+			return any(map(lambda pad: pad.chains, drum.drum_pads[index * 4:index * 4 + 4]))
 		return False
 
 	def _get_position(self):

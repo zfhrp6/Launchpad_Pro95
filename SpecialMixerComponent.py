@@ -15,12 +15,6 @@ SEND_COLORS = (('Sends.A', 'Sends.AAvail'),
  ('Sends.G', 'Sends.GAvail'),
  ('Sends.H', 'Sends.HAvail'))
 
-#fix for python3
-try:
-	xrange
-except NameError:
-	xrange = range
-
 class SpecialRadioButtonGroup(ControlList, RadioButtonControl):
 
 	class State(RadioButtonGroup.State):
@@ -79,7 +73,7 @@ class SpecialMixerComponent(MixerComponent):
 		#for strip, control in map(None, self._channel_strips, controls or []):
 		i=0
 		for strip in self._channel_strips:
-			if self.send_index is None or self.send_index not in xrange(8):
+			if self.send_index is None or self.send_index not in range(8):
 				strip.set_send_controls(None)
 			else:
 				if controls!=None and controls[i]:
