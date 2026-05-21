@@ -75,7 +75,7 @@ class DeviceControllerStrip(ButtonSliderElement):
 		if self._parameter_to_map_to is not None:	
 			return self._parameter_to_map_to.is_quantized
 		else:
-			return false
+			return False
 					
 	@property
 	def _mode(self):
