@@ -71,7 +71,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 		self._is_mutlinote = False
 				
 		# matrix
-		if matrix != None:
+		if matrix is not None:
 			self.set_matrix(matrix)
 
 	def disconnect(self):
@@ -148,7 +148,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 		self._update_matrix()
 
 	def update_notes(self): # Deprecated ???
-		if self._clip != None:
+		if self._clip is not None:
 			self._clip.select_all_notes()
 			note_cache = self._clip.get_selected_notes()
 			self._clip.deselect_all_notes()
@@ -185,12 +185,12 @@ class NoteEditorComponent(ControlSurfaceComponent):
 #*********************MATRIX*********************
 	
 	#Add listener and initialize note buffers OK
-	def set_matrix(self, matrix): 
+	def set_matrix(self, matrix):
 		if (matrix != self._matrix):
-			if (self._matrix != None):
+			if (self._matrix is not None):
 				self._matrix.remove_value_listener(self._matrix_value)
 			self._matrix = matrix
-			if (self._matrix != None):
+			if (self._matrix is not None):
 				self._matrix.add_value_listener(self._matrix_value)
 				self._width = self._matrix.width()
 				#self._height = self._matrix.height()
@@ -198,18 +198,18 @@ class NoteEditorComponent(ControlSurfaceComponent):
 				self._grid_back_buffer = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]]
 
 	# Updates the LP LEDs OK
-	def _update_matrix(self):  
-		if self.is_enabled() and self._matrix!=None:
+	def _update_matrix(self):
+		if self.is_enabled() and self._matrix is not None:
 			# clear back buffer
 			for x in range(self.width):
 				for y in range(self.height):
 					self._grid_back_buffer[x][y] = "DefaultButton.Disabled"
 
 			# update back buffer
-			if self._clip != None and self._note_cache != None:
+			if self._clip is not None and self._note_cache is not None:
 
 				# play back position
-				if self._playhead != None:
+				if self._playhead is not None:
 					play_position = self._playhead  # position in beats (integer = number of beats, decimal subdivisions)
 					play_page = int(play_position / self.quantization / self.width / self.number_of_lines_per_note)
 					play_row = int(play_position / self.quantization / self.width) % self.number_of_lines_per_note
@@ -234,7 +234,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 						
 
 
-				# Display the notes in the 1st left column 
+				# Display the notes in the 1st left column
 				if self.is_multinote:
 					self._display_note_markers()
 					# Display the current played page
@@ -324,36 +324,36 @@ class NoteEditorComponent(ControlSurfaceComponent):
 	
 
 	# matrix buttons listener OK
-	def _matrix_value(self, value, x, y, is_momentary): 
+	def _matrix_value(self, value, x, y, is_momentary):
 		if self.is_enabled() and y < self.height: #Height value can be 8 (MULTINOTE/SCALE_EDIT) or 4 (STEPSEQ_MODE_NORMAL)
 			if ((value != 0) or (not is_momentary)): #if NOTE_ON or button is toggle
 				self._stepsequencer._was_velocity_shifted = False # Some previous state logic INVESTIGATE
 				self._matrix_value_message([value, x, y, is_momentary])
 
 	#Add/Delete/Mute notes in the cache for PL light management and in the Live's Clip OK
-	def _matrix_value_message(self, values):  # (value=127/0, x=idx, y=idx, is_momentary=True) 
+	def _matrix_value_message(self, values):  # (value=127/0, x=idx, y=idx, is_momentary=True)
 		value = values[0]
 		x = values[1]
 		y = values[2]
 		is_momentary = values[3]
 		"""(pitch, time, duration, velocity, mute state)"""
-		assert (self._matrix != None)
+		assert (self._matrix is not None)
 		assert (value in range(128))
 		assert (x in range(self._matrix.width()))
 		assert (y in range(self._matrix.height()))
 		assert isinstance(is_momentary, type(False))
 
-		if self.is_enabled() and self._clip == None:
+		if self.is_enabled() and self._clip is None:
 			self._stepsequencer.create_clip()
 
-		elif self.is_enabled() and self._clip != None:
+		elif self.is_enabled() and self._clip is not None:
 			if value != 0 or not is_momentary: #if NOTE_ON or button is toggle
 				if(self._is_velocity_shifted):
 					self._velocity_notes_pressed = self._velocity_notes_pressed + 1 #Just changing some note velocity
 
 				# note data
 
-				if self.is_multinote: # Calculate note pitch and time for notes 
+				if self.is_multinote: # Calculate note pitch and time for notes
 					time = self.quantization * (self._page * self.width * self.number_of_lines_per_note + x + (y % self.number_of_lines_per_note * self.width))
 					pitch = self._key_indexes[int(8 / self.number_of_lines_per_note) - 1 - int(y / self.number_of_lines_per_note)]
 				else:
@@ -397,9 +397,9 @@ class NoteEditorComponent(ControlSurfaceComponent):
 #*********************VELOCITY/BTN_SHIFT*********************
 
 	# Updates the velocity button light OK			
-	def _update_velocity_button(self): 
-		if self.is_enabled() and self._velocity_button != None:
-			if self._clip != None:
+	def _update_velocity_button(self):
+		if self.is_enabled() and self._velocity_button is not None:
+			if self._clip is not None:
 				if self._is_velocity_shifted:
 					self._velocity_button.set_on_off_values("StepSequencer.NoteEditor.VelocityShifted")
 					self._velocity_button.turn_on()
@@ -409,19 +409,19 @@ class NoteEditorComponent(ControlSurfaceComponent):
 				self._velocity_button.set_light("DefaultButton.Disabled")
 
 	# Refresh button and its listener OK
-	def set_velocity_button(self, button): 
+	def set_velocity_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (button != self._velocity_button):
-			if (self._velocity_button != None):
+			if (self._velocity_button is not None):
 				self._velocity_button.remove_value_listener(self._velocity_value)
 			self._velocity_button = button
-			if (self._velocity_button != None):
+			if (self._velocity_button is not None):
 				self._velocity_button.add_value_listener(self._velocity_value, identify_sender=True)
 
 			
 	# Handle button shifted and velocity selection OK			
-	def _velocity_value(self, value, sender): 
-		assert (self._velocity_button != None)
+	def _velocity_value(self, value, sender):
+		assert (self._velocity_button is not None)
 		assert (value in range(128))
 		if self.is_enabled():
 			if ((value == 0) or (not sender.is_momentary())):
@@ -450,7 +450,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 
 	# Mute all entries for a given MIDI note OK
 	def mute_lane(self, pitch_to_mute):
-		if self.is_enabled() and self._clip != None:
+		if self.is_enabled() and self._clip is not None:
 			self._clip.select_all_notes()
 			note_cache = self._clip.get_selected_notes()
 			if self._note_cache != note_cache:

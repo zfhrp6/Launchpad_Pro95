@@ -33,7 +33,7 @@ class SpecialSessionRecordingComponent(SessionRecordingComponent):
 		track = self._target_track_component.target_track
 		playing_slot = self._track_can_record(track) and track_playing_slot(track)
 		if not track_is_recording(track):
-			should_overdub = playing_slot != None
+			should_overdub = playing_slot is not None
 			if should_overdub:
 				self.song().overdub = not self.song().overdub
 				if not self.song().is_playing:

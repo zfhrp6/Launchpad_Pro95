@@ -59,7 +59,7 @@ class DrumGroupFinderComponent(ControlSurfaceComponent, Subject):
 
 	def _update_drum_group(self):
 		drum_group = find_drum_group_device(self.root)
-		if type(drum_group) != type(self._drum_group) or drum_group != self._drum_group:
+		if type(drum_group) is not type(self._drum_group) or drum_group != self._drum_group:
 			self._drum_group = drum_group
 		self.notify_drum_group()
 

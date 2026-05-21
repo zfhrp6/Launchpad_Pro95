@@ -48,7 +48,7 @@ class SpecialMixerComponent(MixerComponent):
 		#for strip, control in map(None, self._channel_strips, controls or []):
 		i=0
 		for strip in self._channel_strips:
-			if controls!=None and controls[i]:
+			if controls is not None and controls[i]:
 				controls[i].set_channel(VOLUME_MAP_CHANNEL)
 				controls[i].set_light_and_type('Mixer.Volume', FADER_TYPE_STANDARD)
 				strip.set_volume_control(controls[i])
@@ -60,7 +60,7 @@ class SpecialMixerComponent(MixerComponent):
 		#for strip, control in map(None, self._channel_strips, controls or []):
 		i=0
 		for strip in self._channel_strips:
-			if controls!=None and controls[i]:
+			if controls is not None and controls[i]:
 				controls[i].set_channel(PAN_MAP_CHANNEL)
 				controls[i].set_light_and_type('Mixer.Pan', FADER_TYPE_BIPOLAR)
 				strip.set_pan_control(controls[i])
@@ -76,7 +76,7 @@ class SpecialMixerComponent(MixerComponent):
 			if self.send_index is None or self.send_index not in range(8):
 				strip.set_send_controls(None)
 			else:
-				if controls!=None and controls[i]:
+				if controls is not None and controls[i]:
 					controls[i].set_channel(SENDS_MAP_CHANNEL)
 					controls[i].set_light_and_type(SEND_COLORS[self.send_index][0], FADER_TYPE_STANDARD)
 					strip.set_send_controls((None,) * self._send_index + (controls[i],))
@@ -88,7 +88,7 @@ class SpecialMixerComponent(MixerComponent):
 		#for strip in self._channel_strips:#, button in map(None, self._channel_strips, buttons or []):
 		i=0
 		for strip in self._channel_strips:
-			if buttons!=None and buttons[i]:
+			if buttons is not None and buttons[i]:
 				buttons[i].reset_state()
 				buttons[i].set_on_off_values('Mixer.ArmOn', 'Mixer.ArmOff')
 				strip.set_arm_button(buttons[i])
@@ -100,7 +100,7 @@ class SpecialMixerComponent(MixerComponent):
 		#for strip, button in map(None, self._channel_strips, buttons or []):
 		i=0
 		for strip in self._channel_strips:
-			if buttons!=None and buttons[i]:
+			if buttons is not None and buttons[i]:
 				buttons[i].reset_state()
 				buttons[i].set_on_off_values('Mixer.SoloOn', 'Mixer.SoloOff')
 				strip.set_solo_button(buttons[i])
@@ -112,7 +112,7 @@ class SpecialMixerComponent(MixerComponent):
 		#for strip, button in map(None, self._channel_strips, buttons or []):
 		i=0
 		for strip in self._channel_strips:
-			if buttons!=None and buttons[i]:
+			if buttons is not None and buttons[i]:
 				buttons[i].reset_state()
 				buttons[i].set_on_off_values('Mixer.MuteOff', 'Mixer.MuteOn')
 				strip.set_mute_button(buttons[i])
@@ -124,7 +124,7 @@ class SpecialMixerComponent(MixerComponent):
 		#for strip, button in map(None, self._channel_strips, buttons or []):
 		i=0
 		for strip in self._channel_strips:
-			if buttons!=None and buttons[i]:
+			if buttons is not None and buttons[i]:
 				buttons[i].reset_state()
 				buttons[i].set_on_off_values('Mixer.Selected', 'Mixer.Unselected')
 				strip.set_select_button(buttons[i])

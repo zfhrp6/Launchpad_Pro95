@@ -5,7 +5,7 @@ fix mode switching :
 	not restoring mode correctly when leaving fader base session modes.
 
 implict arm:
-	fix implictic arming/disabling. 
+	fix implictic arming/disabling.
 	fix incompatiblity with launchpad95 on track change + implicit arm
 	track feed back not disabled sometime on mode switch.
 	
@@ -16,10 +16,10 @@ instrument mode:
 	functions :
 		quantize one note ?
 		delete one note
-		mute note 
+		mute note
 		duplicate clip
 		double clip
-	drum mode : 
+	drum mode :
 		scrolling not working
 		mute, solo
 
@@ -35,7 +35,7 @@ step seq2
 	
 	
 step seq1
-	note selector 
+	note selector
 		using the instrument mode scale colors
 		mute
 	drumrack mode

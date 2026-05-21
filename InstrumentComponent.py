@@ -32,7 +32,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._scale_component = ScaleComponent(control_surface = self._control_surface, enabled = True)
 		self._note_component = NoteComponent(
 			control_surface = self._control_surface,
-			feedback_channels = self._feedback_channels, 
+			feedback_channels = self._feedback_channels,
 			non_feedback_channel = self._non_feedback_channel,
 		 	get_pattern = self._scale_component.get_pattern
 		)
@@ -42,7 +42,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 	 	
 	def set_layers(self,midimap):
 		common_layer_mode = LayerMode(
-			self._common_component, 
+			self._common_component,
 			layer = Layer(
 				arrow_left_button = midimap['Arrow_Left_Button'],
 				arrow_right_button = midimap['Arrow_Right_Button'],
@@ -59,7 +59,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 		
 
 		drum_group_layer_mode = LayerMode(
-			self._control_surface._drum_group, 
+			self._control_surface._drum_group,
 			layer = Layer(
 				#scroll_up_button = midimap['Scene_Launch_Button_Matrix_Raw'][0][1],
 				#scroll_down_button = midimap['Scene_Launch_Button_Matrix_Raw'][0][2],
@@ -71,13 +71,13 @@ class InstrumentComponent(ControlSurfaceComponent):
 				#scroll_page_down_button=midimap['Arrow_Down_Button'],
 				#drum_matrix = midimap['Drum_Button_Matrix']#,
 				drum_matrix=midimap['Main_Button_Matrix']
-				#select_button = midimap['Shift_Button'], 
+				#select_button = midimap['Shift_Button'],
 				#delete_button = midimap['Delete_Button']
 			)
 		)
 		
 		self._modes.add_mode(
-			'drum_mode', 
+			'drum_mode',
 			[
 				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, USER_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
@@ -90,13 +90,13 @@ class InstrumentComponent(ControlSurfaceComponent):
 		)
 		
 		scale_layer_mode = LayerMode(
-			self._scale_component, 
+			self._scale_component,
 			layer=Layer(
 				matrix=midimap['Main_Button_Matrix']
 			)
 		)
 		self._modes.add_mode(
-			'scale_mode', 
+			'scale_mode',
 			[
 				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, USER_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
@@ -106,16 +106,16 @@ class InstrumentComponent(ControlSurfaceComponent):
 			]
 		)
 		note_layer_mode = LayerMode(
-			self._note_component, 
+			self._note_component,
 			layer=Layer(
 				matrix=midimap['Main_Button_Matrix']
-				#select_button = midimap['Shift_Button'], 
+				#select_button = midimap['Shift_Button'],
 				#delete_button = midimap['Delete_Button']
 
 			)
 		)
 		self._modes.add_mode(
-			'note_mode', 
+			'note_mode',
 			[
 				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, USER_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
@@ -127,13 +127,13 @@ class InstrumentComponent(ControlSurfaceComponent):
 		
 		#Audio mode
 		audio_layer_mode = LayerMode(
-			AudioModeComponent(), 
+			AudioModeComponent(),
 			layer=Layer(
 				matrix=midimap['Main_Button_Matrix']
 			)
 		)
 		self._modes.add_mode(
-			'audio_mode', 
+			'audio_mode',
 			[
 				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
@@ -274,14 +274,14 @@ class CommonModeComponent(ControlSurfaceComponent):
 	
 	@play_button.pressed
 	def _play(self,button):
-		if self.selected_scene != None:
+		if self.selected_scene is not None:
 			slot = self.selected_scene.clip_slots[self.selected_track_idx]
 			slot.fire()
 			self._control_surface.show_message("fire clip")
 	
 	@stop_button.pressed
 	def _stop(self,button):
-		if self.selected_scene != None:
+		if self.selected_scene is not None:
 			slot = self.selected_scene.clip_slots[self.selected_track_idx]
 			slot.stop()
 			self._control_surface.show_message("stop clip")

@@ -50,7 +50,7 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._osd = None
 		self._modus = 0
 		self._key = 0
-		self._octave = 3 
+		self._octave = 3
 		self._mode = mode #chromatic, diatonic
 		self._is_drumrack = False
 		self._quick_scale = False
@@ -91,10 +91,10 @@ class ScaleComponent(ControlSurfaceComponent):
 				self._control_surface.show_message("selected octave: " + str(octave))
 
 	def octave_up(self, message = True):
-		self.set_octave(self._octave + 1, message) 
+		self.set_octave(self._octave + 1, message)
 	
 	def octave_down(self, message = True):
-		self.set_octave(self._octave - 1, message) 
+		self.set_octave(self._octave - 1, message)
 		
 	def set_modus(self, index, message = True):
 		if index > -1 and index < len(self._modus_list):
@@ -118,10 +118,10 @@ class ScaleComponent(ControlSurfaceComponent):
 		if matrix:
 			matrix.reset()
 		if (matrix != self._matrix):
-			if (self._matrix != None):
+			if (self._matrix is not None):
 				self._matrix.remove_value_listener(self._matrix_pressed)
 		self._matrix = matrix
-		if (self._matrix != None):
+		if (self._matrix is not None):
 			self._matrix.add_value_listener(self._matrix_pressed)
 		self.update()
 
@@ -131,7 +131,7 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._osd = osd
 
 	def _update_OSD(self):
-		if self._osd != None:
+		if self._osd is not None:
 			self._osd.attributes[0] = ""
 			self._osd.attribute_names[0] = ""
 			self._osd.attributes[1] = MUSICAL_MODES[self._modus * 2]
@@ -151,7 +151,7 @@ class ScaleComponent(ControlSurfaceComponent):
 			self._osd.update()
 			
 	def update(self):
-		if self.is_enabled() and self._matrix!=None:
+		if self.is_enabled() and self._matrix is not None:
 			#self._control_surface.log_message("update scale: "+str(self._matrix))
 			super(ScaleComponent, self).update()
 			self._update_OSD()
@@ -473,7 +473,7 @@ class ScaleComponent(ControlSurfaceComponent):
 			origin = -notes[0]
 
 		# interval
-		if self._interval == None:
+		if self._interval is None:
 			interval = 8
 		elif self.is_chromatic:
 			interval = [0, 2, 4, 5, 7, 9, 10, 11][self._interval]
@@ -489,12 +489,12 @@ class ScaleComponent(ControlSurfaceComponent):
 			origin = [0, origin]
 		
 		return MelodicPattern(
-			steps = steps, 
-			scale = notes, 
-			origin = origin, 
-			base_note = int((self._octave + 1) * 12), 
-			chromatic_mode = self.is_chromatic, 
-			chromatic_gtr_mode = self.is_chromatic_gtr, 
+			steps = steps,
+			scale = notes,
+			origin = origin,
+			base_note = int((self._octave + 1) * 12),
+			chromatic_mode = self.is_chromatic,
+			chromatic_gtr_mode = self.is_chromatic_gtr,
 			diatonic_ns_mode = self.is_diatonic_ns
 		)
 		
@@ -522,10 +522,10 @@ class Modus(Scale):
 class MelodicPattern(object):
 
 	def __init__(self,
-	 		steps=[0, 0], 
-			scale=range(12), 
-			base_note=0, 
-			origin=[0, 0], 
+	 		steps=[0, 0],
+			scale=range(12),
+			base_note=0,
+			origin=[0, 0],
 			valid_notes=range(128),
 			chromatic_mode=False,
 			chromatic_gtr_mode=False,
@@ -579,7 +579,7 @@ class MelodicPattern(object):
 
 	def note(self, x, y):
 		octave, note = self._octave_and_note(x, y)
-		index = self.base_note + 12 * octave + note 
+		index = self.base_note + 12 * octave + note
 		root = note == self.scale[0]
 		if len(self.scale) < 5:
 			highlight = False
@@ -588,7 +588,7 @@ class MelodicPattern(object):
 		in_scale = note in self.scale
 		valid = index in self.valid_notes
 		return self.NoteInfo(
-			index, 
+			index,
 			x,
 			root = root,
 			highlight = highlight,

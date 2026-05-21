@@ -13,18 +13,18 @@ class MultiButtonElement(ConfigurableButtonElement):
 	def __init__(self, slave_channels, is_momentary, msg_type, channel, identifier, skin = None, default_states = None, name = '', color_slaves = False, *a, **k):
 		super(MultiButtonElement, self).__init__(is_momentary, msg_type, channel, identifier, skin, default_states, *a, **k)
 		self.name = name
-		self._slave_buttons = [ 
+		self._slave_buttons = [
 			SlaveButtonElement(
-				self, 
-				is_momentary, 
-				msg_type, 
-				slave_channel, 
-				identifier, 
-				skin, 
-				(default_states if color_slaves else None), 
+				self,
+				is_momentary,
+				msg_type,
+				slave_channel,
+				identifier,
+				skin,
+				(default_states if color_slaves else None),
 				name=(name + '_ch_' + str(slave_channel + 1)), *a, **k
-				) 
-			for slave_channel in slave_channels 
+				)
+			for slave_channel in slave_channels
 		]
 
 	def reset(self):

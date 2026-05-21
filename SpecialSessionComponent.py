@@ -91,7 +91,7 @@ class SpecialClipSlotComponent(ClipSlotComponent):
 	def _do_duplicate_clip(self):
 		if self._clip_slot:
                         copyclip(self.canonical_parent._copied_slot,self._clip_slot)
-                        
+
 	def _do_track_arm(self):
 		if self._clip_slot:
 			track = self._clip_slot.canonical_parent
@@ -120,7 +120,7 @@ class SpecialSceneComponent(SceneComponent):
 
 	@subject_slot('value')
 	def _launch_value(self, value):
-		if self.is_enabled() and self._scene != None:
+		if self.is_enabled() and self._scene is not None:
 			if self._select_button and self._select_button.is_pressed() and value:
 				self._do_select_scene(self._scene)
 			elif self._delete_button and self._delete_button.is_pressed() and value:

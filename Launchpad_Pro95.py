@@ -205,13 +205,13 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_background(self):
 		self._modifier_background_component = ModifierBackgroundComponent(
-			name='Background_Component', 
-			is_enabled=False, 
+			name='Background_Component',
+			is_enabled=False,
 			layer=Layer(shift_button=self._midimap['Shift_Button'])
 		)
 		self._shifted_background = BackgroundComponent(
-			name='No_Op_Shifted_Buttons', 
-			is_enabled=False, 
+			name='No_Op_Shifted_Buttons',
+			is_enabled=False,
 			layer=Layer(
 				#click_button=self._midimap.with_shift('Click_Button'),
 				delete_button=self._midimap.with_shift('Delete_Button'),
@@ -224,7 +224,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def _create_global_component(self):
 		self._actions_component = ActionsComponent(
 			name='Global_Actions',
-			is_enabled=False, 
+			is_enabled=False,
 			layer=Layer(
 				undo_button=self._midimap['Undo_Button'],
 				redo_button=self._midimap.with_shift('Undo_Button'),
@@ -270,9 +270,9 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				)
 
 		self._session_zoom = SessionZoomingComponent(
-			self._session, 
-			name='Session_Overview', 
-			is_enabled=True, 
+			self._session,
+			name='Session_Overview',
+			is_enabled=True,
 			enable_skinning=True
 		)
 
@@ -280,7 +280,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._session_record = SpecialSessionRecordingComponent(
 			self._target_track_component,
 			name='Session_Recording',
-			is_enabled=False, 
+			is_enabled=False,
 			layer=Layer(
 				record_button=self._midimap['Session_Record_Button']
 			)
@@ -288,9 +288,9 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_actions(self):
 		self._clip_actions_component = ClipActionsComponent(
-			self._target_track_component, 
-			name='Clip_Actions', 
-			is_enabled=False, 
+			self._target_track_component,
+			name='Clip_Actions',
+			is_enabled=False,
 			layer=Layer(
 				duplicate_button=self._midimap['Duplicate_Button'],
 				double_button=self._midimap['Double_Loop_Button'],
@@ -301,9 +301,9 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_drums(self):
 		self._drum_group_finder = DrumGroupFinderComponent(
-			self._target_track_component, 
-			name = 'Drum_Group_Finder', 
-			is_enabled = False, 
+			self._target_track_component,
+			name = 'Drum_Group_Finder',
+			is_enabled = False,
 			layer = None
 		)
 		self._on_drum_group_changed.subject = self._drum_group_finder
@@ -327,9 +327,9 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		
 	def _create_mixer(self):
 		self._mixer = SpecialMixerComponent(
-			NUM_TRACKS, 
-			auto_name=True, 
-			is_enabled=True, 
+			NUM_TRACKS,
+			auto_name=True,
+			is_enabled=True,
 			invert_mute_feedback=True
 		)
 		self._mixer.name = 'Mixer_Control'
@@ -359,7 +359,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def _create_modes(self):
 		self._modes = ModesComponent(name='Launchpad_Modes', is_enabled=False)
 		self._session_layer_mode = AddLayerMode(
-			self._session, 
+			self._session,
 			Layer(
 				scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'],
 				clip_launch_buttons=self._midimap['Main_Button_Matrix'],
@@ -371,16 +371,16 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		)
 		action_button_background = BackgroundComponent(name='No_Op_Buttons')
 		self._action_button_background_layer_mode = LayerMode(
-			action_button_background, 
+			action_button_background,
 			Layer(
-				delete_button=self._midimap['Delete_Button'], 
-				quantize_button=self._midimap['Quantize_Button'], 
-				duplicate_button=self._midimap['Duplicate_Button'], 
+				delete_button=self._midimap['Delete_Button'],
+				quantize_button=self._midimap['Quantize_Button'],
+				duplicate_button=self._midimap['Duplicate_Button'],
 				double_button=self._midimap['Double_Loop_Button']
 			)
 		)
 		self._clip_delete_layer_mode = AddLayerMode(
-			self._clip_actions_component, 
+			self._clip_actions_component,
 			layer=Layer(
 				delete_button=self._midimap['Delete_Button']
 			)
@@ -417,25 +417,25 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_session_zooming_modes(self):
 		session_zoom_layer = Layer(
-			button_matrix=self._midimap['Main_Button_Matrix'], 
-			nav_left_button=self._midimap['Arrow_Left_Button'], 
-			nav_right_button=self._midimap['Arrow_Right_Button'], 
-			nav_up_button=self._midimap['Arrow_Up_Button'], 
+			button_matrix=self._midimap['Main_Button_Matrix'],
+			nav_left_button=self._midimap['Arrow_Left_Button'],
+			nav_right_button=self._midimap['Arrow_Right_Button'],
+			nav_up_button=self._midimap['Arrow_Up_Button'],
 			nav_down_button=self._midimap['Arrow_Down_Button']
 		)
 		session_zooming_layer_mode = LayerMode(self._session_zoom, session_zoom_layer)
 		self._session_zooming_manager = SessionZoomingManagerComponent(self._modes, is_enabled=False)
 		session_zooming_button_layer_mode = LayerMode(
-			self._session_zooming_manager, 
+			self._session_zooming_manager,
 			Layer(session_zooming_button=self._midimap['Session_Mode_Button'])
 		)
 		self._prioritized_session_zooming_button_layer_mode = LayerMode(
-			self._session_zooming_manager, 
+			self._session_zooming_manager,
 			Layer(session_zooming_button=self._midimap['Session_Mode_Button'], priority=1)
 		)
 		self._session_zooming_background = BackgroundComponent(name='Session_Zooming_Background')
 		session_zooming_background_layer_mode = LayerMode(
-			self._session_zooming_background, 
+			self._session_zooming_background,
 			Layer(
 				scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'],
 				delete_button=self._midimap['Delete_Button'],
@@ -461,7 +461,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_session_mode(self):
 		self._modes.add_mode(
-			'session_mode', 
+			'session_mode',
 			[
 				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 				self._session_layer_mode, self._session.update_navigation_buttons],
@@ -471,27 +471,27 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def _create_note_modes(self):
 		#pass
 		#note_mode_matrix_translation = self._create_translation(
-		#	'Note_Mode_Matrix_Translation', 
-		#	CHROM_MAP_CHANNEL, 
+		#	'Note_Mode_Matrix_Translation',
+		#	CHROM_MAP_CHANNEL,
 		#	Layer(
-		#		button_matrix=self._midimap['Main_Button_Matrix'], 
-		#		note_button_matrix=self._midimap['Note_Button_Matrix'], 
-		#		drum_matrix=self._midimap['Drum_Button_Matrix'], 
+		#		button_matrix=self._midimap['Main_Button_Matrix'],
+		#		note_button_matrix=self._midimap['Note_Button_Matrix'],
+		#		drum_matrix=self._midimap['Drum_Button_Matrix'],
 		#		mixer_button_matrix=self._midimap['Mixer_Button_Matrix']
-		#	), 
+		#	),
 		#	should_enable=False
 		#)
 		# note_mode_scene_launch_translation = self._create_translation(
-		# 	'Note_Mode_Scene_Launch_Translation', 
-		# 	#CHROM_MAP_CHANNEL, 
+		# 	'Note_Mode_Scene_Launch_Translation',
+		# 	#CHROM_MAP_CHANNEL,
 		# 	DR_MAP_CHANNEL,
 		# 	Layer(
 		# 		scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix']
 		# 	)
 		# )
 		#drum_mode_note_matrix_translation = self._create_translation(
-		#	'Drum_Mode_Note_Button_Translation', 
-		#	0, 
+		#	'Drum_Mode_Note_Button_Translation',
+		#	0,
 		#	Layer(note_button_matrix=self._midimap['Note_Button_Matrix']),
 		#	should_enable=False,
 		#	should_reset=False
@@ -500,16 +500,16 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		
 		#self._note_modes = SpecialModesComponent(name='Note_Modes')
 		#self._note_modes.add_mode(
-		#	'chromatic_mode', 
+		#	'chromatic_mode',
 		#	[
-		#		partial(self._layout_setup, NOTE_LAYOUT_SYSEX_BYTE), 
+		#		partial(self._layout_setup, NOTE_LAYOUT_SYSEX_BYTE),
 		#		self._clip_delete_layer_mode,
 		#		note_mode_matrix_translation
 		#	]
 		#)
 		
 		#self._note_modes.add_mode(
-		#	'audio_mode', 
+		#	'audio_mode',
 		#	[
 		#		partial(self._layout_setup, AUDIO_LAYOUT_SYSEX_BYTE),
 		#		self._clip_delete_layer_mode
@@ -517,7 +517,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#)
 		#self._note_modes.set_enabled(False)
 		#self._modes.add_mode(
-		#	'note_mode', 
+		#	'note_mode',
 		#	[
 		#		note_mode_scene_launch_translation,
 		#		self._note_modes,
@@ -530,15 +530,15 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#	behaviour=ReenterBehaviour(self.toggle_detail_view)
 		#)
 		#self._drum_group = DrumGroupComponent(
-		#	self._clip_actions_component, 
-		#	name='Drum_Group_Control'#, 
+		#	self._clip_actions_component,
+		#	name='Drum_Group_Control'#,
 		#	#translation_channel=DR_MAP_CHANNEL
 		#)
 		
 		self._instrument_component._modes.set_enabled(False)
 		self._instrument_component.set_layers(self._midimap)
 		self._modes.add_mode(
-			'note_mode', 
+			'note_mode',
 			[
 				#note_mode_scene_launch_translation,
 				self._instrument_component._modes,
@@ -556,12 +556,12 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_device_mode(self):
 		#device_mode_scene_launch_translation = self._create_translation(
-		#	'Device_Mode_Scene_Launch_Translation', 
-		#	DEVICE_MAP_CHANNEL, 
+		#	'Device_Mode_Scene_Launch_Translation',
+		#	DEVICE_MAP_CHANNEL,
 		#	Layer(scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'])
 		#)
 		device_layer_mode = LayerMode(
-			self._device, 
+			self._device,
 			#layer=Layer(parameter_controls=self._midimap['Slider_Button_Matrix'])
 			layer=Layer(
 				matrix = self._midimap['Main_Button_Matrix'],
@@ -580,21 +580,21 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			)
 		)
 		#device_nav_layer_mode = LayerMode(
-		#	self._device_navigation, 
+		#	self._device_navigation,
 		#	layer=Layer(
-		#		device_nav_left_button=self._midimap['Arrow_Left_Button'], 
+		#		device_nav_left_button=self._midimap['Arrow_Left_Button'],
 		#		device_nav_right_button=self._midimap['Arrow_Right_Button']
 		#	)
 		#)
 		#device_background_layer_mode = LayerMode(
-		#	self._device_background, 
+		#	self._device_background,
 		#	layer=Layer(
 		#		arrow_up_button=self._midimap['Arrow_Up_Button'],
 		#		arrow_down_button=self._midimap['Arrow_Down_Button']
 		#	)
 		#)
 		self._modes.add_mode(
-			'device_mode', 
+			'device_mode',
 			[
 				#partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
 				#partial(self._layout_setup, FADER_LAYOUT_SYSEX_BYTE),
@@ -608,7 +608,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			 	#device_mode_scene_launch_translation,
 			 	self._show_playing_clip,
 		 		self._set_clip_actions_type
-			], 
+			],
 			behaviour=ReenterBehaviour(self.toggle_detail_view)
 		)
 
@@ -621,7 +621,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				LayerMode(
-					self._step_sequencer, 
+					self._step_sequencer,
 					Layer(
 						matrix = self._midimap['Main_Button_Matrix'],
 						prev_track_button = self._midimap['Arrow_Left_Button'],
@@ -675,7 +675,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		])
 		self._user_button_modes.selected_mode = "stepsequencer_mode"
 		self._modes.add_mode(
-				'user_mode', 
+				'user_mode',
 				[
 					partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
 					partial(self._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
@@ -712,11 +712,11 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		
 	def _create_record_arm_mode(self):
 		arm_layer_mode = LayerMode(
-			self._mixer, 
+			self._mixer,
 			layer=Layer(arm_buttons=self._midimap['Mixer_Button_Matrix'])
 		)
 		self._modes.add_mode(
-			'record_arm_mode', 
+			'record_arm_mode',
 			[
 				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
@@ -746,7 +746,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def _create_mute_mode(self):
 		mute_layer_mode = LayerMode(self._mixer, layer=Layer(mute_buttons=self._midimap['Mixer_Button_Matrix']))
 		self._modes.add_mode(
-			'mute_mode', 
+			'mute_mode',
 			[
 				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
@@ -760,11 +760,11 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_solo_mode(self):
 		solo_layer_mode = LayerMode(
-			self._mixer, 
+			self._mixer,
 			layer=Layer(solo_buttons=self._midimap['Mixer_Button_Matrix'])
 		)
 		self._modes.add_mode(
-			'solo_mode', 
+			'solo_mode',
 			[
 				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
@@ -778,8 +778,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_volume_mode(self):
 		volume_mode_scene_launch_translation = self._create_translation(
-			'Volume_Mode_Scene_Launch_Translation', 
-			VOLUME_MAP_CHANNEL, 
+			'Volume_Mode_Scene_Launch_Translation',
+			VOLUME_MAP_CHANNEL,
 			Layer(scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'])
 		)
 		volume_layer_mode = LayerMode(self._mixer, layer=Layer(volume_controls=self._midimap['Slider_Button_Matrix']))
@@ -799,16 +799,16 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_pan_mode(self):
 		pan_mode_scene_launch_translation = self._create_translation(
-			'Pan_Mode_Scene_Launch_Translation', 
-			PAN_MAP_CHANNEL, 
+			'Pan_Mode_Scene_Launch_Translation',
+			PAN_MAP_CHANNEL,
 			Layer(scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'])
 		)
 		pan_layer_mode = LayerMode(
-			self._mixer, 
+			self._mixer,
 			layer=Layer(pan_controls=self._midimap['Slider_Button_Matrix'])
 		)
 		self._modes.add_mode(
-			'pan_mode', 
+			'pan_mode',
 			[
 				partial(self._layout_setup, FADER_LAYOUT_SYSEX_BYTE),
 		 		pan_layer_mode,
@@ -823,14 +823,14 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_sends_mode(self):
 		send_layer_mode = LayerMode(
-			self._mixer, 
+			self._mixer,
 			layer=Layer(
 				send_controls=self._midimap['Slider_Button_Matrix'],
 				send_select_buttons=self._midimap['Scene_Launch_Button_Matrix']
 			)
 		)
 		self._modes.add_mode(
-			'sends_mode', 
+			'sends_mode',
 			[
 				partial(self._layout_setup, FADER_LAYOUT_SYSEX_BYTE),
 		 		send_layer_mode,
@@ -844,7 +844,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _create_stop_clips_mode(self):
 		stop_layer_mode = AddLayerMode(
-			self._session, 
+			self._session,
 			Layer(
 				stop_track_clip_buttons=self._midimap['Mixer_Button_Matrix'],
 				stop_scene_clip_buttons=self._midimap['Scene_Stop_Button_Matrix'],
@@ -1003,7 +1003,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self.set_highlighting_session_component(None)
 		super(Launchpad_Pro95, self).port_settings_changed()
 
-        
+	
 	def on_identified(self):
 		self._send_challenge()
 
