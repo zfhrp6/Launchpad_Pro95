@@ -23,7 +23,7 @@ class Slideable(Subject):
 		pos_count = self.position_count
 		first_pos = max(int(pmin), 0)
 		last_pos = min(int(pmax), pos_count)
-		return xrange(first_pos, last_pos)
+		return range(first_pos, last_pos)
 
 	def contents(self, position):
 		return False
