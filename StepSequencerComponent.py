@@ -1,11 +1,11 @@
 import Live
-from .consts import * 
+from .consts import *
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
 from _Framework.CompoundComponent import CompoundComponent
 from _Framework.ButtonElement import ButtonElement
 from _Framework.Util import find_if
 from .NoteEditorComponent import NoteEditorComponent
-from .ScaleComponent import * 
+from .ScaleComponent import *
 from .TrackControllerComponent import TrackControllerComponent
 import time
 from .Settings import *
@@ -827,7 +827,7 @@ class StepSequencerComponent(CompoundComponent):
 		self._long_press = 0.5
 		self._lock_button = None
 		self._selected_track = None
-	 
+	
 	def _set_loop_selector(self):
 		self._loop_selector = self.register_component(LoopSelectorComponent(self._control_surface, self))
 
@@ -845,7 +845,7 @@ class StepSequencerComponent(CompoundComponent):
 			TrackControllerComponent(
 				control_surface = self._control_surface,
 				implicit_arm = False,
-				enabled = True, 
+				enabled = True,
 				skin_name = "StepSequencer"
 			)
 		)
@@ -853,8 +853,8 @@ class StepSequencerComponent(CompoundComponent):
 	def _set_scale_component(self):
 		self._scale_component = self.register_component(
 			ScaleComponent(
-				control_surface = self._control_surface, 
-				enabled = False, 
+				control_surface = self._control_surface,
+				enabled = False,
 				mode = "chromatic"
 			)
 		)
@@ -1161,7 +1161,7 @@ class StepSequencerComponent(CompoundComponent):
 				if idx == -1:
 					try:
 						idx = list(self.song().scenes).index(self.song().view.selected_scene)
-					except ValueError: 
+					except ValueError:
 						idx = -1
 
 			# unlocked mode
@@ -1307,7 +1307,7 @@ class StepSequencerComponent(CompoundComponent):
 	# 			self._drum_group_device = None
 	# 	else:
 	# 		self._drum_group_device = None
-	# 
+	#
 	
 	#def _detect_scale_mode(self):
 	#	if not self._is_locked:
@@ -1336,7 +1336,7 @@ class StepSequencerComponent(CompoundComponent):
 					self._scale_button.turn_on()
 				else:
 					self._scale_button.turn_off()
-	 
+	
 	def set_scale_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._scale_button != button):
@@ -1427,7 +1427,7 @@ class StepSequencerComponent(CompoundComponent):
 				else:
 					self._mode_button.set_on_off_values("DefaultButton.Disabled", "DefaultButton.Disabled")
 					self._mode_button.turn_off()
-	 
+	
 	def set_mode_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._mode_button != button):
@@ -1438,7 +1438,7 @@ class StepSequencerComponent(CompoundComponent):
 				assert isinstance(button, ButtonElement)
 				self._last_mode_button_press = time.time()
 				self._mode_button.add_value_listener(self._mode_button_value, identify_sender=True)
-	 
+	
 	def _mode_button_value(self, value, sender):
 		assert (self._mode_button is not None)
 		assert (value in range(128))
@@ -1468,7 +1468,7 @@ class StepSequencerComponent(CompoundComponent):
 					self._quantization_button.turn_on()
 				else:
 					self._quantization_button.turn_off()
-	 
+	
 	def set_quantization_button(self, button):
 		assert (isinstance(button, (ButtonElement, type(None))))
 		if (self._quantization_button != button):
@@ -1529,7 +1529,7 @@ class StepSequencerComponent(CompoundComponent):
 						self._lock_button.set_on_off_values("StepSequencer.Lock.ToClip.On", "StepSequencer.Lock.ToClip.Off")
 					if self._is_locked:
 						self._lock_button.turn_on()
-					else:  
+					else:
 						self._lock_button.turn_off()
 				else:
 					self._lock_button.set_on_off_values("DefaultButton.Disabled", "DefaultButton.Disabled")
@@ -1539,7 +1539,7 @@ class StepSequencerComponent(CompoundComponent):
 		assert (self._lock_button is not None)
 		assert (value in range(128))
 		if self.is_enabled() and self._clip is not None:
-			now = time.time() 
+			now = time.time()
 			if ((value != 0) or (not self._lock_button.is_momentary())):
 				self._last_lock_button_press = now
 			else:

@@ -50,7 +50,7 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._osd = None
 		self._modus = 0
 		self._key = 0
-		self._octave = 3 
+		self._octave = 3
 		self._mode = mode #chromatic, diatonic
 		self._is_drumrack = False
 		self._quick_scale = False
@@ -91,10 +91,10 @@ class ScaleComponent(ControlSurfaceComponent):
 				self._control_surface.show_message("selected octave: " + str(octave))
 
 	def octave_up(self, message = True):
-		self.set_octave(self._octave + 1, message) 
+		self.set_octave(self._octave + 1, message)
 	
 	def octave_down(self, message = True):
-		self.set_octave(self._octave - 1, message) 
+		self.set_octave(self._octave - 1, message)
 		
 	def set_modus(self, index, message = True):
 		if index > -1 and index < len(self._modus_list):
@@ -489,12 +489,12 @@ class ScaleComponent(ControlSurfaceComponent):
 			origin = [0, origin]
 		
 		return MelodicPattern(
-			steps = steps, 
-			scale = notes, 
-			origin = origin, 
-			base_note = int((self._octave + 1) * 12), 
-			chromatic_mode = self.is_chromatic, 
-			chromatic_gtr_mode = self.is_chromatic_gtr, 
+			steps = steps,
+			scale = notes,
+			origin = origin,
+			base_note = int((self._octave + 1) * 12),
+			chromatic_mode = self.is_chromatic,
+			chromatic_gtr_mode = self.is_chromatic_gtr,
 			diatonic_ns_mode = self.is_diatonic_ns
 		)
 		
@@ -522,10 +522,10 @@ class Modus(Scale):
 class MelodicPattern(object):
 
 	def __init__(self,
-	 		steps=[0, 0], 
-			scale=range(12), 
-			base_note=0, 
-			origin=[0, 0], 
+	 		steps=[0, 0],
+			scale=range(12),
+			base_note=0,
+			origin=[0, 0],
 			valid_notes=range(128),
 			chromatic_mode=False,
 			chromatic_gtr_mode=False,
@@ -579,7 +579,7 @@ class MelodicPattern(object):
 
 	def note(self, x, y):
 		octave, note = self._octave_and_note(x, y)
-		index = self.base_note + 12 * octave + note 
+		index = self.base_note + 12 * octave + note
 		root = note == self.scale[0]
 		if len(self.scale) < 5:
 			highlight = False
@@ -588,7 +588,7 @@ class MelodicPattern(object):
 		in_scale = note in self.scale
 		valid = index in self.valid_notes
 		return self.NoteInfo(
-			index, 
+			index,
 			x,
 			root = root,
 			highlight = highlight,

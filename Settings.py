@@ -2,13 +2,13 @@
 #SESSION__STOP_BUTTONS = True
 
 # Link sessions between multiple launchpad95. Experimental
-#SESSION__LINK = True 
+#SESSION__LINK = True
 
 # Link stepseq to follow session. Experimental
 #STEPSEQ__LINK_WITH_SESSION = True
 
 # configure what user modes buttons do.
-# the 3 first value configure the 3 sub modes of button user mode 1, 
+# the 3 first value configure the 3 sub modes of button user mode 1,
 # and following ones are for user mode 2 button
 USER_MODES = [
 		"instrument", "device", "user 1",

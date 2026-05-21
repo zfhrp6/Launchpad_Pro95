@@ -91,7 +91,7 @@ class SpecialClipSlotComponent(ClipSlotComponent):
 	def _do_duplicate_clip(self):
 		if self._clip_slot:
                         copyclip(self.canonical_parent._copied_slot,self._clip_slot)
-                        
+
 	def _do_track_arm(self):
 		if self._clip_slot:
 			track = self._clip_slot.canonical_parent

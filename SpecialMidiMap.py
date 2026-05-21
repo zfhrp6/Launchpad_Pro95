@@ -25,14 +25,14 @@ def make_multi_button(name, channel, number, midi_message_type, skin = None, def
 	"""
 	is_momentary = True
 	return MultiButtonElement(
-		USER_MODE_CHANNELS, 
-		is_momentary, 
-		midi_message_type, 
-		channel, 
-		number, 
-		name=name, 
-		skin=skin, 
-		default_states=default_states, 
+		USER_MODE_CHANNELS,
+		is_momentary,
+		midi_message_type,
+		channel,
+		number,
+		name=name,
+		skin=skin,
+		default_states=default_states,
 		**k
 	)
 
@@ -48,10 +48,10 @@ class SpecialMidiMap(MidiMap):#midi map is just a 'dict' (or map)
 	def add_button(self, name, channel, number, midi_message_type, default_states = None, element_factory = make_button, **k):
 		assert(name not in self.keys())
 		self[name] = element_factory(
-			name, 
-			channel, 
-			number, 
-			midi_message_type, 
+			name,
+			channel,
+			number,
+			midi_message_type,
 			default_states=default_states,
 			**k
 		)
@@ -83,11 +83,11 @@ class SpecialMidiMap(MidiMap):#midi map is just a 'dict' (or map)
 	def add_modifier_button(self, name, channel, number, midi_message_type, default_states = None, element_factory = make_button):
 		assert(name not in self.keys())
 		self.add_button(
-			name, 
-			channel, 
-			number, 
-			midi_message_type, 
-			default_states=default_states, 
-			element_factory=element_factory, 
+			name,
+			channel,
+			number,
+			midi_message_type,
+			default_states=default_states,
+			element_factory=element_factory,
 			resource_type=PrioritizedResource
 		)
